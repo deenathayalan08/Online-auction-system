@@ -1,0 +1,22 @@
+{% extends 'auctions/base.html' %}
+
+{% block title %}Available Auctions{% endblock %}
+
+{% block content %}
+    <h2>Available Auctions</h2>
+    <ul class="auction-list">
+        {% for auction in auctions %}
+            <li class="auction-item">
+                <img src="{{ auction.image.url }}" alt="{{ auction.title }}" class="auction-image">
+                <div class="auction-info">
+                    <h3><a href="{% url 'auction_detail' auction.id %}">{{ auction.title }}</a></h3>
+                    <p>{{ auction.description|truncatewords:20 }}</p>
+                    <p>Current Price: ${{ auction.current_price }}</p>
+                    <p>Ends at: {{ auction.end_time|date:"M d, Y H:i" }}</p>
+                </div>
+            </li>
+        {% empty %}
+            <li>No active auctions at the moment.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
